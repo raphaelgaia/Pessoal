@@ -1,0 +1,153 @@
+.topnav {
+    position: fixed;
+    display: inline;
+    background-color: #333;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    list-style: none;
+    padding: 0;
+    margin: 0;  
+    z-index: 2000;
+  }
+
+.topnav li a {
+    float: left;
+    color: #f2f2f2;
+  }
+
+.topnav li {
+    padding: 0px;
+    z-index: 1000;
+    text-decoration: none;
+    font-size: 17px;
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    cursor:pointer;
+  }
+
+.topnav li:not(:first-child) {
+    padding: 14px 16px;
+  }
+
+.topnav li a img{
+    margin-top: 0px;
+    height: 45px;
+    width: 45px;
+    padding: 0px;
+  }
+  
+.topnav li:hover:not(:first-child) {
+    background-color: #ddd;
+    color: black;
+    border: solid 0px;
+    border-radius: 5px;
+  }
+  
+.topnav .icon {
+    display: none;
+  }
+
+    
+.submenu {
+    position: absolute;
+    list-style: none;
+    max-height: 400px;
+    top: 45px;
+    margin-left: -16px;
+    padding: 0px 0px;
+    width: 100px;
+    font-size: 10px;
+}
+
+.topnav .submenu a{
+    background-color: #333;
+    width: 100%;
+    display: block;
+    padding-left: 40px;
+    font-size: 15px;
+    padding: 8px 15px;
+    border: solid 1px #c2c2c2;
+    border-radius: 4px;
+
+}
+  
+  /* hover behaviour for links inside .submenu */
+  .topnav .submenu a:hover {
+    background-color: #c5c5c5;
+    color: black;
+  }
+
+.submenuClose {
+    display: none;
+    max-height: 0px;
+    list-style: none;
+  }
+
+
+@media screen and (max-width: 600px) {
+    .topnav li:not(:first-child) {display: none;}
+    .topnav li.icon {
+      float: right;
+      display: block;
+    }
+    .topnav{
+      display: block;
+    }
+  }
+  
+@media screen and (max-width: 600px) {
+    .topnav.responsive .icon {
+      position: fixed;
+      right: 0;
+      top: 0;
+    }
+    .topnav.responsive li {
+      float: none;
+      display: block;
+      text-align: left;
+      max-width: 500px;
+      border-top: solid 1px #c2c2c2;
+    }
+    .submenu{
+      position: relative;
+      top: 0px;
+      width: 500px;
+    }
+    .topnav .submenu a {
+      border: solid 1px #c2c2c2;
+      border-radius: 0px;
+      padding-left: 40px;
+    }
+    .submenuClose{
+      position: relative;
+    }
+    
+  }
+
+a.button6{
+    display:inline-block;
+    padding:0.7em 1.4em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.15em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    text-transform:uppercase;
+    font-weight:400;
+    color:#FFFFFF;
+    background-color:#3369ff;
+    box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+    text-align:center;
+    position:relative;
+}
+a.button6:active{
+    top:0.1em;
+    }
+@media all and (max-width:30em){
+     a.button6{
+     display:block;
+     margin:0.4em auto;
+     }
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="./estilo.css">
+  <link rel="stylesheet" type="text/css" href="./mobile.css" media="screen and (max-width:480px)">
+  <link rel="stylesheet" type="text/css" href="./desktop.css" media="screen and (min-width:481px)">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+  <script>
+     google.charts.load('current', {'packages':['gauge']});
+     google.charts.setOnLoadCallback(drawChart);
+
+     function drawChart() {
+       
+       var jsonData;
+       var chartTemp = new google.visualization.Gauge(document.getElementById('chart_temp'));
+       var chartNivel = new google.visualization.Gauge(document.getElementById('chart_nivel'));
+       var dados = new google.visualization.DataTable();
+       dados.addColumn('string','Label');
+       dados.addColumn('number','Value',);
+
+       var options = {
+                width: 120, height: 120,
+                redFrom: 31, redTo: 40,
+                yellowFrom:29, yellowTo: 31,
+                greenFrom:24, greenTo:29,
+               minorTicks: 5,max: 35,min: 15
+       };
+
+      var optionsNivel = {
+                width: 120  , height: 120,
+                redFrom: 0, redTo: 25,
+                yellowFrom:25, yellowTo: 29,
+                greenFrom:29, greenTo:32,
+               minorTicks: 5,max: 32,min: 0
+       };
+
+       $.getJSON("sensores.json",function(data){
+           jsonData = data;
+
+           $.each(jsonData , function () {
+              dados.addRows([[this.id_sensor,this.valor]]);
+           });
+           
+           var dataTemp = new google.visualization.DataView(dados);
+           dataTemp.setRows(dados.getFilteredRows([{column:0,value:"Aquário"}]));
+           chartTemp.draw(dataTemp, options);
+
+           dataTemp.setRows(dados.getFilteredRows([{column:0,value:"Nível"}]));
+           chartNivel.draw(dataTemp, optionsNivel);
+       });
+   
+     }
+   </script>
+</head> 
+<body>
+
+<div class="principal">
+
+<div ng-app="myApp"  ng-cloak> 
+
+    <div ng-include="'header.html'"></div>
+    <h3>Parâmetros</h3>
+
+    <div style="width: 400px; height: 120px; display: table;">
+       <div id="chart_temp" style="display: table-cell;"></div>
+       <div id="chart_nivel" style="display: table-cell;"></div>
+    </div>
+
+    <div>
+    <form ng-controller="FormCtrl" ng-submit="submitForm()" ng-init="onloadFun()">
+        <input type="checkbox" ng-model="form.termometro" ng-change='submitForm()' ng-init="form.termometro=false" />Termometro
+            <br/>
+        <input type="checkbox" ng-model="form.filtragem" ng-change='submitForm()'/>Filtragem
+            <br/>
+            <input id="filtragem" type="range" ng-model="form.filtragemvelocidade" ng-mouseup='submitForm()' min="80" max="250" value="0">
+            <a class="button6" ng-click='submitForm()'>Ok</a>
+    </form>
+    </div>
+
+</div>
+
+</div>
+
+<script type="text/javascript">  
+var app = angular.module('myApp', []);
+
+app.controller('FormCtrl', function ($scope, $http,$interval) {
+
+$scope.submitForm = function() {
+
+    $http({
+    method: 'POST', 
+    data: $scope.form,
+    url: 'teste.php',
+
+}).then(function (response) {
+    console.log(response);
+    $scope.form.valor=$scope.form.filtragemvelocidade;
+    $scope.onloadFun();
+    //$scope.form = response.data[0]
+},function (error){
+    console.log(error, 'can not get data.');
+});
+
+};
+
+$scope.onloadFun=function()
+      {
+          $http.get("teste.php").then(function(response) {
+          console.log(response.data,'OnLoad');
+          if (response.data.filtragem>0) {
+              $scope.form.filtragem=true;    
+          }else{
+            $scope.form.filtragem=false;
+          }
+          if (response.data.termometro>0) {
+              $scope.form.termometro=true;    
+          }else
+          {
+            $scope.form.termometro=false; 
+          }
+          $scope.form.filtragemvelocidade=response.data.filtragemvelocidade;
+     });
+
+     };
+
+//$interval($scope.onloadFun, 10000);
+
+});
+</script>
+
+</body>
+</html>
