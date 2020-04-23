@@ -1,1 +1,1 @@
-[{"valor": 27.5, "data": "2020-04-22 22:50:06", "id_sensor": "Aquário"}, {"valor": 28.95, "data": "2020-04-22 22:55:09", "id_sensor": "Nível"}, {"valor": 146, "data": "2020-04-22 22:55:10", "id_sensor": "filtragem"}]
+[{"valor": 27.6, "id_sensor": "Aquário", "data": "2020-04-22 23:00:08"}, {"valor": 28.96, "id_sensor": "Nível", "data": "2020-04-22 23:05:13"}, {"valor": 146, "id_sensor": "filtragem", "data": "2020-04-22 23:05:14"}]
